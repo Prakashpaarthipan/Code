@@ -1,0 +1,39 @@
+$(document).ready(function () {
+  setTimeout(function (){
+    $.msgbox({
+    'message'	: '<h2 class="text-center" style="margin-bottom:10px">DISCLAIMER</h2>Thank you for visiting our website. We are currently updating our website towards the compliance of the newly introduced housing law for the State of Tamil Nadu i.e. the Real Estate (Regulation and Development) Act, 2016 and the rules and regulations notified there under.In the interim, no information, images or material which is currently available / displayed on the website shall be deemed to constitute any advertisement, invitation, solicitation, offer or sale of any of our product offerings and we shall not accept any such bookings based on reliance of such currently available information, images and material on the website and further shall not be responsible for any consequences of any action taken by any person or authority relying on material/information or otherwise.',
+    'type'		: 'confirm',
+    'buttons'	: [{'type' : 'yes', 'value': 'I Agree'}],
+    'callback'	: function myFunction(){
+      $.msgbox({
+        'message'	: 'In order to process your request you must provide the followings',
+        'type'    	: 'prompt',
+        'inputs'  	: [{'type' : 'text', 'label' : 'Enter Your Name:', 'id' : 'name', 'name' : 'user_name'},
+                 {'type' : 'email', 'label' : 'Enter Your email:','name' : 'email'},
+                 {'type' : 'text', 'label' : 'Enter Your Contact:','name' : 'contact'}
+                ],
+        'buttons'	: [{'type' : 'yes', 'value' : 'Submit'}],
+        'callback'	: function(result){
+              for(var i in result)
+                {
+                  var name = result[0].value;
+                  var email = result[1].value;
+                  var contact = result[2].value;
+                  if(name != "" && email != "" && contact != "")
+                  {
+                    window.location.href = "alert.php?name=" + name +"&email="+ email +"&contact="+ contact;
+                    return false;
+                  /* Your code */
+                  }
+                  else
+                  {
+                    myFunction();
+                    return false;
+                  }
+                }
+          }
+        });
+      }
+    });
+  },1000);
+});
