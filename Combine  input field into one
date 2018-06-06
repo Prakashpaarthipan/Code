@@ -1,0 +1,17 @@
+// $("#txt_project_head").blur(function () {
+              
+            //     var branch= $('#txt_branch_type').val();
+                
+            //     var project_name =$('#txt_project_name').val();
+            //     var topcore=$('#txt_top_core').val();
+               
+            //     var core=$('#txt_core').val();
+            //     var ledgercode =$('#txt_ledger_code').val();
+            //     var ledgername=$('#txt_ledger_name').val();
+            //     var projecthead=$('#txt_project_head').val();
+            //     var projectid=branch+"/"+topcore+"/"+core+"/"+ledgercode+"/"+ledgername+"/"+project_name;
+            // // alert(projectid);
+            //     $("#txt_project_id").val(projectid);
+
+                
+            // });
