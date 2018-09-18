@@ -1,0 +1,116 @@
+<?php
+//echo('<pre>');
+$strdat1=date_create("14-SEP-2018 09:31:45 AM");
+$strdat2 = strtoupper($strdat1->format('d-M-Y'));  
+$strdat2 = strtoupper($strdat2." 07:00:00 PM");
+$strdat2=date_create($strdat2);
+//print_r($strdat1);
+//print_r($strdat2);
+$diff=date_diff($strdat1,$strdat2);
+$v= $diff->format('%H:%I:%S');
+//echo("START TIME\n");
+//print_r($v);
+$strttime=$v;
+////////////////////////////////////first half
+$strdat2=date_create("16-SEP-2018 07:00:00 PM");
+$strdat1 = strtoupper($strdat2->format('d-M-Y'));
+$strdat1 = strtoupper($strdat1." 09:30:00 AM");
+$strdat1=date_create($strdat1);
+//print_r($strdat1);
+//print_r($strdat2);
+$diff=date_diff($strdat1,$strdat2);
+$diff=date_diff($strdat1,$strdat2);
+$v= $diff->format('%H:%I:%S');
+//echo("\nEND TIME\n");
+//print_r($v);
+$endtime=$v;
+/////////////////////////////last half
+$date=date_create("14-SEP-2018 09:31:45 AM");
+$end=date_create("16-SEP-2018 07:00:00 PM");
+$i=date_add($date,date_interval_create_from_date_string("1 days"));
+$chk=0;
+$str_time='00:00:00';
+while($chk==0)
+{    //print_r($i);
+     //print_r($end);
+     $diff=date_diff($i,$end);
+     $diff= $diff->format('%d');
+     //print_r($diff);
+     if($diff<1)
+     {   $chk=1;
+         continue;
+     }
+     
+
+$str_time = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "00:$1:$2", $str_time);
+
+sscanf($str_time, "%d:%d:%d", $hours, $minutes, $seconds);
+
+$hrs_old_seconds = $hours * 3600 + $minutes * 60 + $seconds;
+
+$str_time ="09:30:00";
+
+$str_time = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "00:$1:$2", $str_time);
+
+sscanf($str_time, "%d:%d:%d", $hours, $minutes, $seconds);
+
+$hrs_toadd_seconds = $hours * 3600 + $minutes * 60 + $seconds;
+
+$hrs_old_int1 = $hrs_old_seconds + $hrs_toadd_seconds;
+$str_time=gmdate("H:i:s", $hrs_old_int1);
+
+     $i=date_add($date,date_interval_create_from_date_string("1 days"));
+     
+
+}
+//echo "\n".$str_time."\n";
+//echo("\nintrval time\n".$sumintrvl);
+//echo"<br>";
+//echo date('H:i:s',$sumintrvl);
+/////////////////date adding
+//echo("\ntotal time of user \n");
+
+$str_time2 = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "00:$1:$2", $strttime);
+
+sscanf($str_time2, "%d:%d:%d", $hours, $minutes, $seconds);
+
+$hrs_old_seconds = $hours * 3600 + $minutes * 60 + $seconds;
+
+
+
+$str_time1 = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "00:$1:$2", $endtime);
+
+sscanf($str_time1, "%d:%d:%d", $hours, $minutes, $seconds);
+
+$hrs_toadd_seconds = $hours * 3600 + $minutes * 60 + $seconds;
+
+
+
+
+$str_time3 = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "00:$1:$2", $str_time);
+
+sscanf($str_time3, "%d:%d:%d", $hours, $minutes, $seconds);
+
+$hrs_toadd_seconds_to = $hours * 3600 + $minutes * 60 + $seconds;
+
+
+
+$hrs_old_int1 = $hrs_old_seconds + $hrs_toadd_seconds + $hrs_toadd_seconds_to;
+
+
+
+
+
+//$str_time12=date("H:i:s", $hrs_old_int1);
+
+echo gmdate("d\D H:i:s",$hrs_old_int1);
+/*$temp1=explode(':',$strttime);
+$temp2=explode(':',$endtime);
+$temp3=
+$hour=intval($temp1[0])+intval($temp2[0])+$sumintrvl;
+echo($hour."hours ");
+$min=intval($temp1[1])+intval($temp2[1]);
+echo($min." minutes ");
+$sec=intval($temp1[2])+intval($temp2[2]);
+echo($sec." seconds ");*/
+?>
