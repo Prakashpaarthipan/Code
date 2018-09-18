@@ -1,0 +1,282 @@
+<?php
+
+
+/*
+function biss_hours($start, $end){
+
+    $startDate = new DateTime($start);
+    $endDate = new DateTime($end);
+    $periodInterval = new DateInterval( "PT1H" );
+
+    $period = new DatePeriod( $startDate, $periodInterval, $endDate );
+    $count = 0;
+
+    foreach($period as $date){
+
+    $startofday = clone $date;
+    $startofday->setTime(9,00);
+
+    $endofday = clone $date;
+    $endofday->setTime(12,00);
+
+        if($date > $startofday && $date <= $endofday && !in_array($date->format('l'), array('Sunday'))){
+
+            $count++;
+        }
+
+    }
+
+    echo $count."<br>";
+
+    //Get seconds of Start time
+    $start_d = date("Y-m-d H:i:s", strtotime($start));
+    $start_d_seconds = strtotime($start_d);
+    $start_t_seconds = strtotime($start);
+    $start_seconds = $start_t_seconds - $start_d_seconds;
+
+
+    $end_d = date("Y-m-d H:00:00", strtotime($end));
+    $end_d_seconds = strtotime($end_d);
+    $end_t_seconds = strtotime($end);
+    $end_seconds = $end_t_seconds - $end_d_seconds;
+                                    
+    $diff = $end_seconds-$start_seconds;
+
+   echo "<br>";
+   
+    if($diff!=0){
+        $count--;
+    }
+    
+    //echo $diff;
+
+    $total_min_sec = date('i:s',$diff);
+    //echo $total_min_sec;
+    return $count .":".$total_min_sec;
+}
+
+$start = '2018-09-17 10:00:00';
+$end = '2018-09-19 19:00:00';
+
+$go = biss_hours($start,$end);
+echo $go;
+*/
+/*You take your start date and calculate the rest time on this day (if it is a business day)
+ You take your end date and calculate the time on this day and
+ take the days in between and multiply them with your business hours (just those,   that are business days)
+ Day start is 08:30 and day end is 17:30 so 9 hour working days*/
+/*
+function biss_hours($start, $end){
+
+   $startDate = new DateTime($start);
+   $endDate = new DateTime($end);
+
+   //Set the start and end dates to the start of the working day
+   $startofday = clone $startDate;
+   $startofday->setTime(8,30);
+   $enddaystart = clone $endDate;
+   $enddaystart->setTime(8,30);
+
+   //get the rest time on start day in hours
+   $t1 = $startofday->format('Y-m-d H:i:s');
+   $t2 = $startDate->format('Y-m-d H:i:s');
+   $firstDayRest = calculate_hours($t1, $t2);
+
+   //get the rest time on start day in hours
+   $t3 = $enddaystart->format('Y-m-d H:i:s');
+   $t4 = $endDate->format('Y-m-d H:i:s');
+   $lastDayRest = calculate_hours($t3, $t4);
+
+   //Get the number of days between the two dates
+   $daysBetween = getWeekdayDifference($start, $end);
+   //multiply the days by the 9 working hours
+   $hoursBetween = $daysBetween * 9;
+   //add the rest times onto the number of working hours between the two dates.
+   return $hoursBetween + $firstDayRest + $lastDayRest;
+
+}
+
+
+//returns the hours between two dates
+function calculate_hours($t1, $t2){
+   $t1 = StrToTime ($t1);
+   $t2 = StrToTime ($t2);
+
+   $diff = $t2 - $t1;
+   $hours = $diff / ( 60 * 60 );
+
+   return $hours;
+}
+//returns the number of days (excluding weekends) between two dates
+function getWeekdayDifference($startDate, $endDate)
+{
+   $days = 0;
+
+   $startDate = new DateTime($startDate);
+   $endDate = new DateTime($endDate);
+
+   while($startDate->diff($endDate)->days > 0) {
+      $days += $startDate->format('N') < 6 ? 1 : 0;
+      $startDate = $startDate->add(new \\DateInterval("P1D"));
+   }
+
+   return $days;
+}
+
+$start = '2014-06-25 11:30';
+$end = '2014-07-22 12:30';
+
+echo $onHold = biss_hours($start, $end);
+*/
+
+/*function biss_hours($start, $end){
+
+    $startDate = new DateTime($start);
+    $endDate = new DateTime($end);
+    $periodInterval = new DateInterval( "PT1H" );
+
+    $period = new DatePeriod( $startDate, $periodInterval, $endDate );
+    $count = 0;
+
+    foreach($period as $date){
+
+    $startofday = clone $date;
+    $startofday->setTime(9,30);
+
+    $endofday = clone $date;
+    $endofday->setTime(19,00);
+
+        if($date > $startofday && $date <= $endofday && !in_array($date->format('l'), array('Sunday','Saturday'))){
+
+            $count++;
+        }
+
+    }
+    
+    //Get seconds of Start time
+    $start_d = date("Y-m-d H:00:00", strtotime($start));
+    $start_d_seconds = strtotime($start_d);
+    $start_t_seconds = strtotime($start);
+    $start_seconds = $start_t_seconds - $start_d_seconds;
+                            
+    //Get seconds of End time
+    $end_d = date("Y-m-d H:00:00", strtotime($end));
+    $end_d_seconds = strtotime($end_d);
+    $end_t_seconds = strtotime($end);
+    $end_seconds = $end_t_seconds - $end_d_seconds;
+                                    
+    $diff = $end_seconds-$start_seconds;
+    
+    if($diff!=0):
+        $count--;
+    endif;
+        
+    $total_min_sec = date('i:s',$diff);
+    
+    return $count .":".$total_min_sec;
+}
+
+$start = '2018-06-25 05:30:00';
+$end = '2018-06-25 20:00:00';
+
+$go = biss_hours($start,$end);
+
+echo $go;*/
+
+function work_hours_diff($date1,$date2) {
+    if ($date1>$date2) 
+        { $tmp=$date1; 
+            $date1=$date2; 
+            $date2=$tmp; 
+            unset($tmp);
+             $sign=-1; }
+     else $sign = 1;
+    if ($date1==$date2) return 0;
+
+    $days = 0;
+    $working_days = array(1,2,3,4,5,6); // Monday-->Saturday
+    $working_hours = array(9.5, 19.0); // from 9:30(am) to 7:00(pm)
+    $current_date = $date1;
+    $beg_h = floor($working_hours[0]); $beg_m = ($working_hours[0]*60)%60;
+    $end_h = floor($working_hours[1]); $end_m = ($working_hours[1]*60)%60;
+
+    // setup the very next first working timestamp
+
+    if (!in_array(date('w',$current_date) , $working_days)) {
+        // the current day is not a working day
+
+        // the current timestamp is set at the begining of the working day
+        $current_date = mktime( $beg_h, $beg_m, 0, date('n',$current_date), date('j',$current_date), date('Y',$current_date) );
+        // search for the next working day
+        while ( !in_array(date('w',$current_date) , $working_days) ) {
+            $current_date += 24*3600; // next day
+        }
+    } else {
+        // check if the current timestamp is inside working hours
+
+        $date0 = mktime( $beg_h, $beg_m, 0, date('n',$current_date), date('j',$current_date), date('Y',$current_date) );
+        // it's before working hours, let's update it
+        if ($current_date<$date0) $current_date = $date0;
+
+        $date3 = mktime( $end_h, $end_m, 59, date('n',$current_date), date('j',$current_date), date('Y',$current_date) );
+        if ($date3<$current_date) {
+            // outch ! it's after working hours, let's find the next working day
+            $current_date += 24*3600; // the day after
+            // and set timestamp as the begining of the working day
+            $current_date = mktime( $beg_h, $beg_m, 0, date('n',$current_date), date('j',$current_date), date('Y',$current_date) );
+            while ( !in_array(date('w',$current_date) , $working_days) ) {
+                $current_date += 24*3600; // next day
+            }
+        }
+    }
+
+    // so, $current_date is now the first working timestamp available...
+
+    // calculate the number of seconds from current timestamp to the end of the working day
+    $date0 = mktime( $end_h, $end_m, 59, date('n',$current_date), date('j',$current_date), date('Y',$current_date) );
+    $seconds = $date0-$current_date+1;
+
+    //printf("\nFrom %s To %s : %d hours\n",date('d/m/y H:i',$date1),date('d/m/y H:i',$date0),$seconds/3600);
+
+    // calculate the number of days from the current day to the end day
+
+    $date3 = mktime( $beg_h, $beg_m, 0, date('n',$date2), date('j',$date2), date('Y',$date2) );
+    while ( $current_date < $date3 ) {
+        $current_date += 24*3600; // next day
+        if (in_array(date('w',$current_date) , $working_days) ) $days++; // it's a working day
+    }
+    if ($days>0) $days--; //because we've allready count the first day (in $seconds)
+
+    //printf("\nFrom %s To %s : %d working days\n",date('d/m/y H:i',$date1),date('d/m/y H:i',$date3),$days);
+
+    // check if end's timestamp is inside working hours
+    $date0 = mktime( $beg_h, 0, 0, date('n',$date2), date('j',$date2), date('Y',$date2) );
+    if ($date2<$date0) {
+        // it's before, so nothing more !
+    } else {
+        // is it after ?
+        $date3 = mktime( $end_h, $end_m, 59, date('n',$date2), date('j',$date2), date('Y',$date2) );
+        if ($date2>$date3) $date2=$date3;
+        // calculate the number of seconds from current timestamp to the final timestamp
+        $tmp = $date2-$date0+1;
+        $seconds += $tmp;
+        //printf("\nFrom %s To %s : %d hours\n",date('d/m/y H:i',$date2),date('d/m/y H:i',$date3),$tmp/3600);
+    }
+
+    // calculate the working days in seconds
+
+    $seconds += 3600*($working_hours[1]-$working_hours[0])*$days;
+    printf("\nFrom %s To %s : %d hours\n",date('d-m-Y H:i:s',$date1),date('d-m-Y H:i:s',$date2),$seconds/3600);
+    echo "<br>";
+    echo gmdate("H:i:s",$seconds);
+    return $sign * $seconds/3600; // to get hours
+    
+}
+
+
+date_default_timezone_set('Asia/Kolkata');
+$dt1 = strtotime("2018-09-17 09:30:00");
+$dt2 = strtotime("2018-09-18 19:00:00");
+echo work_hours_diff($dt1 , $dt2);
+
+?>
